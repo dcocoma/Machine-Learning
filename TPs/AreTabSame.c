@@ -9,16 +9,29 @@
 //Penser à mettre un commentaire en bout de ligne ACSL (comme pour les TPs précédents)
 
 /*@ requires n>0;
-  @ assigns \nothing;
+  @ assigns \nothing; 
   @ behavior B1:
-  @   assumes ; 
-  @   ensures ;
+  @   assumes n==2 && T1 ==  T2; 
+  @   ensures .\result == 1;
   @ behavior B2:
-  @   assumes ; 
-  @   ensures ;
-  @ complete ;
-  @ disjoint ;
+  @   assumes n==2 && T1 !=  T2; 
+  @   ensures .\result == 0;
+  @ complete B1, B2;
+  @ disjoint B1, B2;
 */
 _Bool AreTabSame(int *T1, int *T2, int n) {
 
+  int i = 0;
+
+  /*@
+	  @ loop invariant I_RANGE_i: 0 <= i <= n; //Analyse cette clause loop invariant à mettre ici. Faire de même pour chaque ligne du contrat ACSL.
+	  @ loop invariant I_E1: \forall integer k; 0<=k<i ==> T1[k]==T2[k];
+	  @ loop assigns i, t[0..(n-1)];
+	  @ loop variant n-i;
+	*/
+
+  for (i=0;i<n;i++){
+    if(T1[i] != T2[i]) return 0;
+  }
+  return 1;
 }
